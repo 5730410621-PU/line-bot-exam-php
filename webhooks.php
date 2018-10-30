@@ -14,7 +14,7 @@ if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text' && $event['message']['text'] == ดูดวงประจำวัน) {
+		if ($event['type'] == 'message' && $event['message']['type'] == 'text' && $event['message']['text'] == s) {
 			// Get text sent
 			$text = 'เลือกวันเกิดมาเลย';
 			// Get replyToken
