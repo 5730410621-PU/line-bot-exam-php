@@ -9,57 +9,14 @@ $access_token = '0jS0Ruxi7W+hKeiP5oCADFKdmopTgkTaPHf4zZ8dai7HNISkyPk717TU9Gkvsyo
 $content = file_get_contents('php://input');
 // Parse JSON
 $events = json_decode($content, true);
+$replyToken = $event['replyToken'];
+$message = $events['events'][0]['message']['text'];
 // Validate parsed JSON data
-if (!is_null($events['events'])) {
-	// Loop through each event
-	foreach ($events['events'] as $event) {
-		// Reply only when message sent is in 'text' format
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text' && $event[0]['message']['text'] == 'ดูดวงประจำวัน') {
-			// Get text sent
-			$text = 'เลือกวันเกิดมาเลย';
-			// Get replyToken
-			$replyToken = $event['replyToken'];
-
-			// Build message to reply back
-			// $messages = [
-			// 	'type' => 'text',
-			// 	'text' => $text
-			// ];
-
-			$messages = [
-				'type' => 'text',
-				'text' => $text
-			];
-					
-
-			// Make a POST Request to Messaging API to reply to sender
-			$url = 'https://api.line.me/v2/bot/message/reply';
-			$data = [
-				'replyToken' => $replyToken,
-				'messages' => [$messages],
-			];
-			$post = json_encode($data);
-			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
-
-			replyMsg($headers,$post);
-		}
-
-		else {
-			$messages = [
-				'type' => 'text',
-				'text' => 'error'
-			];
-
-			$data = [
-				'replyToken' => $replyToken,
-				'messages' => [$messages],
-			];
-			$post = json_encode($data);
-			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
-
-			replyMsg($headers,$post);
-		}
-	}
+if ($message == "test") {
+	$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+        $arrayPostData['messages'][0]['type'] = "text";
+        $arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
+        replyMsg($arrayHeader,$arrayPostData);
 }
 
 function replyMsg($arrayHeader,$arrayPostData){
