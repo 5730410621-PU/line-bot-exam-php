@@ -21,6 +21,10 @@ if ($message == "test") {
 }
 
 else{
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "ewewrwerweweraf;
+	replyMsg($arrayHeader,$arrayPostData);
 	echo $message;
 }
 
