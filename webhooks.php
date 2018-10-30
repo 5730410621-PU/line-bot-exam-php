@@ -9,11 +9,11 @@ $access_token = '0jS0Ruxi7W+hKeiP5oCADFKdmopTgkTaPHf4zZ8dai7HNISkyPk717TU9Gkvsyo
 $content = file_get_contents('php://input');
 // Parse JSON
 $events = json_decode($content, true);
-$replyToken = $event['replyToken'];
+$replyToken = $events['events'][0]['replyToken'];
 $message = $events['events'][0]['message']['text'];
 // Validate parsed JSON data
 if ($message == "test") {
-	$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
+	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
 	replyMsg($arrayHeader,$arrayPostData);
@@ -21,7 +21,7 @@ if ($message == "test") {
 }
 
 else{
-	echo "Not OK";
+	echo $message;
 }
 
 function replyMsg($arrayHeader,$arrayPostData){
