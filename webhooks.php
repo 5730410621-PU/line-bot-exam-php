@@ -14,9 +14,14 @@ $message = $events['events'][0]['message']['text'];
 // Validate parsed JSON data
 if ($message == "test") {
 	$arrayPostData['replyToken'] = $arrayJson['events'][0]['replyToken'];
-        $arrayPostData['messages'][0]['type'] = "text";
-        $arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
-        replyMsg($arrayHeader,$arrayPostData);
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
+	replyMsg($arrayHeader,$arrayPostData);
+	echo "OK ka";
+}
+
+else{
+	echo "Not OK";
 }
 
 function replyMsg($arrayHeader,$arrayPostData){
@@ -33,4 +38,3 @@ function replyMsg($arrayHeader,$arrayPostData){
 	curl_close ($ch);
 }
 
-echo "OK";
