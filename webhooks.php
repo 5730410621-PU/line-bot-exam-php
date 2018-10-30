@@ -14,9 +14,9 @@ if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		// Reply only when message sent is in 'text' format
-		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+		if ($event['type'] == 'message' && $event['message']['type'] == 'text' && $event['message']['text'] == ดูดวงประจำวัน) {
 			// Get text sent
-			$text = 'Hello world';
+			$text = 'เลือกวันเกิดมาเลย';
 			// Get replyToken
 			$replyToken = $event['replyToken'];
 
@@ -26,8 +26,8 @@ if (!is_null($events['events'])) {
 			// 	'text' => $text
 			// ];
 
-			$postback = [
-				'type' => 'postback',
+			$messages = [
+				'type' => 'text',
 				'text' => $text
 			];
 					
@@ -36,7 +36,7 @@ if (!is_null($events['events'])) {
 			$url = 'https://api.line.me/v2/bot/message/reply';
 			$data = [
 				'replyToken' => $replyToken,
-				'messages' => [$postback],
+				'messages' => [$messages],
 			];
 			$post = json_encode($data);
 			$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
