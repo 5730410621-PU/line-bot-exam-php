@@ -190,8 +190,8 @@ function getRichMenu($header){
 	
 	$richMenulist = json_decode($result,true);
 	$count = 0;
-	for($i = 0 ; $i<count($richMenulist);$i++){
-		$richMenuId = $richMenulist['richmenus'][0]['richMenuId'];
+	for($i = 0 ; $i<count($richMenulist['frichmenus']);$i++){
+		$richMenuId = $richMenulist['richmenus'][$i]['richMenuId'];
 		$strUrl = "https://api.line.me/v2/bot/richmenu/$richMenuId";
 		$ch1 = curl_init();
 		curl_setopt($ch1, CURLOPT_URL, $strUrl);
@@ -200,6 +200,7 @@ function getRichMenu($header){
 		curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 		$result = curl_exec($ch1);
 		$httpCode = curl_getinfo($ch1, CURLINFO_HTTP_CODE);
+		if(httpCode == '200')
 		$count =$count+1;
 	}
 
