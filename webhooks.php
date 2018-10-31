@@ -142,7 +142,7 @@ function createRichMenu($arrayHeader,$arrayPostData){
 
 	//$defRes = setDefaultRichMenu($result);
 
-	return $result['richMenuId'];
+	return $result;
 	curl_close ($ch);
 }
 
