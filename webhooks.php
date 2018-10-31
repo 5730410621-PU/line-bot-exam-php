@@ -139,9 +139,10 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
-	$defRes = setDefaultRichMenu($result);
 
-	return $defRes;
+	//$defRes = setDefaultRichMenu($result);
+
+	return $result['richMenuId'];
 	curl_close ($ch);
 }
 
