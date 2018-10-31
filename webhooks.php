@@ -140,13 +140,14 @@ if($message == "showRichMenu"){
 
 function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	$ch = curl_init($strUrl);
+	//curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_POST, false);
-	curl_setopt($ch, CURLOPT_HEADER  , false);  
+	curl_setopt($ch, CURLOPT_HEADER  , true);  
 	curl_setopt($ch, CURLOPT_NOBODY  , false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$result = curl_exec($ch);
@@ -155,7 +156,7 @@ function getRichMenu($header){
 	$richMenuList = (array) json_decode($result,true);
 	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
 	
-	return "result ::".$result."  HTTPCode ::".$httpcode;
+	return "result ::".$result."  HTTPCode ::".$httpcode ."Header ::".$header;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
