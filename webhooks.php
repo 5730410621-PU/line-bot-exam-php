@@ -19,7 +19,7 @@ $message = $arrayJson['events'][0]['message']['text'];
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 
-/*
+
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
@@ -100,7 +100,7 @@ $richMenu = [
 		  ]
     ]
 ];
-*/
+
 
 if($message == "push"){
 	$arrayPostData['replyToken'] = $replyToken;
@@ -109,14 +109,7 @@ if($message == "push"){
 	replyMsg($arrayHeader,$arrayPostData);
 }
 
-else {
-	$arrayPostData['to'] = $id;
-	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Test Fail";
-	pushMsg($arrayHeader,$arrayPostData);
-}
 
-/*
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
@@ -137,10 +130,10 @@ if($message == "createRichMenu"){
 }
 
 if($message == "showRichMenu"){
-	$newRichMenu = null;
-	$newRichMenu = createRichMenu($arrayHeader,$arrayPostData);
+
+	$RichMenu = getRichMenu($arrayHeader,$arrayPostData);
 }
-*/
+
 
 /*
 	$arrayPostData['replyToken'] = $replyToken;	
@@ -166,8 +159,12 @@ function getRichMenu($header){
 	curl_close ($ch);
 
 	$richMenuList = (array) json_decode($result,true);
-	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
-	return $result;
+	$richMenus = array();
+	foreach($richMenuId as $richMenuList['richmenus']){
+		$richMenus = $richMenuId['richMenuId'];
+	}
+	
+	return $richMenus;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
