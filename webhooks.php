@@ -145,8 +145,8 @@ function getRichMenu($header){
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_POST, false);
-	curl_setopt($ch, CURLOPT_NOBODY, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
@@ -156,7 +156,7 @@ function getRichMenu($header){
 	else $result = "Nooooo";
 	curl_close ($ch);
 	
-	return "result ::".$result."\n Header ::".$header."\n HTTP Code :".$httpcode;
+	return "result ::".$result."\nHeader ::".$header."\nHTTP Code :".$httpcode;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
