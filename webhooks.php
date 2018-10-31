@@ -101,7 +101,7 @@ $richmenu = [
 		  ]
     ]
 ];
-$rM = json_encode(createRichMenu($arrayHeader,$richmenu));
+$rM = json_decode(createRichMenu($arrayHeader,$richmenu));
 
 
 
