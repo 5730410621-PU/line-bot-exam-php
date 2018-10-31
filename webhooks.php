@@ -24,7 +24,7 @@ $richmenu = [
     "name" => "Controller",
 	"chatBarText" => "Controller",
 	"areas" => [
-    	'area1' => [
+    	[
           "bounds" => [
               "x" => 551,
               "y" => 325,
@@ -36,7 +36,7 @@ $richmenu = [
               "text" => "up"
 		  ]
 		],
-        'area2' => [
+        [
 			"bounds" => [
 				"x" => 876,
 				"y" => 651,
@@ -48,7 +48,7 @@ $richmenu = [
 				"text" => "right"
 			]
 		  ],
-		  'area3' => [
+		[
 			"bounds" => [
 				"x" => 551,
 				"y" => 972,
@@ -60,7 +60,7 @@ $richmenu = [
 				"text" => "down"
 			]
 		  ],
-		  'area4' => [
+		[
 			"bounds" => [
 				"x" => 225,
 				"y" => 651,
@@ -72,7 +72,7 @@ $richmenu = [
 				"text" => "left"
 			]
 		  ],
-		  'area5' => [
+		[
 			"bounds" => [
 				"x" => 1433,
 				"y" => 657,
@@ -84,7 +84,7 @@ $richmenu = [
 				"text" => "btn b"
 			]
 		  ],
-		  'area6' => [
+		[
 			"bounds" => [
 				"x" => 1907,
 				"y" => 657,
