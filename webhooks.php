@@ -110,7 +110,7 @@ $createRichMenu = createRichMenu($arrayHeader,$richmenu);
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeader);;
+$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeaderSet);;
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
