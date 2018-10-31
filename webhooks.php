@@ -142,7 +142,7 @@ function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_HEADER, $heade);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
@@ -160,7 +160,7 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	$strUrl = "https://api.line.me/v2/bot/richmenu";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, $arrayHeader);
+	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_POST, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrayPostData));
