@@ -108,10 +108,9 @@ $richmenu = [
 
 $createRichMenu = createRichMenu($arrayHeader,$richmenu);
 
-
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeaderSet);;
+$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeader);;
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
@@ -166,7 +165,7 @@ function setDefaultRichMenu($richMenuObject,$header){
 
 	$result = curl_exec($ch);
 	
-	return 'result :'.$result.'/r'.'Header :'.$header;
+	return 'result :'.$result.'/r'.' Header :'.$header;
 	curl_close ($ch);
 }
 
