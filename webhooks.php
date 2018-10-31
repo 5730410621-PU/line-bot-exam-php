@@ -18,6 +18,89 @@ $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 #ตัวอย่าง Message Type "Text + Sticker"
 
+$richmenu = [
+	'size' => [ 'width' => 2500,'height' => 1686 ],
+	"selected" => false,
+    "name" => "Controller",
+	"chatBarText" => "Controller",
+	"areas" => [
+    	'area1' => [
+          "bounds" => [
+              "x" => 551,
+              "y" => 325,
+              "width" => 321,
+              "height" => 321
+		  ],
+          "action" => [
+              "type" => "message",
+              "text" => "up"
+		  ]
+		],
+        'area2' => [
+			"bounds" => [
+				"x" => 876,
+				"y" => 651,
+				"width" => 321,
+				"height" => 321
+			],
+			"action" => [
+				"type" => "message",
+				"text" => "right"
+			]
+		  ],
+		  'area3' => [
+			"bounds" => [
+				"x" => 551,
+				"y" => 972,
+				"width" => 321,
+				"height" => 321
+			],
+			"action" => [
+				"type" => "message",
+				"text" => "down"
+			]
+		  ],
+		  'area4' => [
+			"bounds" => [
+				"x" => 225,
+				"y" => 651,
+				"width" => 321,
+				"height" => 321
+			],
+			"action" => [
+				"type" => "message",
+				"text" => "left"
+			]
+		  ],
+		  'area5' => [
+			"bounds" => [
+				"x" => 1433,
+				"y" => 657,
+				"width" => 321,
+				"height" => 321
+			],
+			"action" => [
+				"type" => "message",
+				"text" => "btn b"
+			]
+		  ],
+		  'area6' => [
+			"bounds" => [
+				"x" => 1907,
+				"y" => 657,
+				"width" => 321,
+				"height" => 321
+			],
+			"action" => [
+				"type" => "message",
+				"text" => "btn a"
+			]
+		  ]
+    ]
+];
+
+$arrayPostData['messages'][0]['type'] = "text";
+$arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
 
 if($message == "push"){
 	$arrayPostData['to'] = $id;
@@ -29,7 +112,7 @@ if($message == "push"){
 	pushMsg($arrayHeader,$arrayPostData);
 }
 
-
+/*
 	$arrayPostData['replyToken'] = $replyToken;	
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = $type .' with :'.$message;
@@ -37,6 +120,23 @@ if($message == "push"){
 	$arrayPostData['messages'][1]['packageId'] = "2";
 	$arrayPostData['messages'][1]['stickerId'] = "34";	
 	ReplyMsg($arrayHeader,$arrayPostData);
+*/
+
+
+function createRichMenu($arrayHeader,$arrayPostData){
+	$strUrl = "https://api.line.me/v2/bot/richmenu";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrayPostData));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	$result = curl_exec($ch);
+	return $result;
+	curl_close ($ch);
+}
 
 
 
