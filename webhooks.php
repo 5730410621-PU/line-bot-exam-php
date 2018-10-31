@@ -102,7 +102,7 @@ $richMenu = [
 ];
 
 
-if($message == "push"){
+if($message == "reply"){
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "Test Reply Message";
@@ -113,7 +113,7 @@ if($message == "push"){
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
-	$newRichMenu = createRichMenu($arrayHeader,$arrayPostData);
+	$newRichMenu = createRichMenu($arrayHeader,$richMenu);
 
 	if($newRichMenu != null){
 		$arrayPostData['replyToken'] = $replyToken;
