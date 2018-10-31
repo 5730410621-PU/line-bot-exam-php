@@ -131,11 +131,9 @@ if($message == "createRichMenu"){
 }
 
 if($message == "showRichMenu"){
-	$arrayHeader1 = array();
-	$arrayHeader1[] = $nullFieldHeader;
-	$arrayHeader1[] = $accessHeader;
+
 	
-	$RichMenuId = getRichMenu($accessHeader1);
+	$RichMenuId = getRichMenu($accessHeader);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenuId;
