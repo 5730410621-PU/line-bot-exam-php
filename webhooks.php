@@ -138,17 +138,6 @@ if($message == "showRichMenu"){
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
-
-/*
-	$arrayPostData['replyToken'] = $replyToken;	
-	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = $type .' with :'.$message;
-	$arrayPostData['messages'][1]['type'] = "sticker";
-	$arrayPostData['messages'][1]['packageId'] = "2";
-	$arrayPostData['messages'][1]['stickerId'] = "34";	
-	ReplyMsg($arrayHeader,$arrayPostData);
-*/
-
 function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
 	$ch = curl_init();
@@ -163,7 +152,7 @@ function getRichMenu($header){
 	curl_close ($ch);
 
 	$richMenuList = (array) json_decode($result,true);
-	$richMenu = $richMenuList['richmenus'][0]['richMunuId'];
+	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
 	
 	return $richMenu;
 }
