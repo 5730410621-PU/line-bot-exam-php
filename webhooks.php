@@ -11,8 +11,8 @@ $arrayJson = json_decode($content, true);
 $jsonHeader = "Content-Type: application/json";
 $accessHeader = "Authorization: Bearer {$accessToken}";
 $arrayHeader = array();
-$arrayHeader[] = $JsonHeader;
-$arrayHeader[] = $AccessHeader;
+$arrayHeader[] = $jsonHeader;
+$arrayHeader[] = $accessHeader;
 //รับข้อความจากผู้ใช้
 $type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
