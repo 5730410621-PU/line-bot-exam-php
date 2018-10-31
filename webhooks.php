@@ -9,10 +9,16 @@ $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
 
 $jsonHeader = "Content-Type: application/json";
+$zeroContentHeader = "Content-Length: 0 ";
 $accessHeader = "Authorization: Bearer {$accessToken}";
+
 $arrayHeader = array();
 $arrayHeader[] = $jsonHeader;
 $arrayHeader[] = $accessHeader;
+
+$arraySetHeader = array();
+$arraySetHeader[] = $zeroContentHeader;
+$arraySetHeader[] = $accessHeader;
 //รับข้อความจากผู้ใช้
 $type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
@@ -153,7 +159,7 @@ function setDefaultRichMenu($richMenuObject){
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_HEADER, $accessHeader);
 	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $accessHeader);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $arraySetHeader);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
