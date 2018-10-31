@@ -1,5 +1,8 @@
 <?php 
 
+require "vendor/autoload.php";
+require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
+
 $accessToken = 'P86IeQbZCJ36VY46VIV4gMEOGfHU/vdiHi
 S3VlzQ1f/G7PpFZ1dBPyMVW4TpLX3otwiGbhQBzu6WqCO3a9z0
 4Qn297fU+1Af373yebILuF/aixVBSjt8xa4yuQa9LwBmAJEcsx
@@ -102,10 +105,10 @@ $richMenu = [
 
 
 if($message == "push"){
-	$arrayPostData['to'] = $id;
+	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Test Push Message";
-	pushMsg($arrayHeader,$arrayPostData);
+	$arrayPostData['messages'][0]['text'] = "Test Reply Message";
+	replyMsg($arrayHeader,$arrayPostData);
 }
 
 else {
