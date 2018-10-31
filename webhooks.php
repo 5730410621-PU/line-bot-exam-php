@@ -108,8 +108,7 @@ $richmenu = [
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = "Header :".$accessHeader;
-//$arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
+$arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
@@ -145,30 +144,30 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
 	curl_close ($ch);
-	$defRes = setDefaultRichMenu($result);
+	$defRes = setDefaultRichMenu($result,$arrayHeader);
 	return $defRes;
 	//return json_decode($result,true)['richMenuId'];
 	
 }
 
-function setDefaultRichMenu($richMenuObject){
+function setDefaultRichMenu($richMenuObject,$Header){
 	
 	
-	/*$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
+	$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
 	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/$richMenuId";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $accessHeader);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $Header);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 	$result = curl_exec($ch);
-	*/
-	//return 'header :'.$accessHeader;
-	//curl_close ($ch);
+	
+	return 'header :'.$Header;
+	curl_close ($ch);
 }
 
 
