@@ -166,7 +166,7 @@ function setDefaultRichMenu($richMenuObject){
 
 	$result = curl_exec($ch);
 	
-	return $result;
+	return $result .', header :'.$accessHeader;
 	curl_close ($ch);
 }
 
