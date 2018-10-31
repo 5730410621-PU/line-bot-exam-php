@@ -158,7 +158,7 @@ function setDefaultRichMenu($richMenuObject){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 	$result = curl_exec($ch);
-	return $richMenuId;
+	return $result;
 	curl_close ($ch);
 }
 
