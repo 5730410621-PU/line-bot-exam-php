@@ -153,7 +153,7 @@ function getRichMenu($header){
 	$richMenuList = (array) json_decode($result,true);
 	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
 	
-	return $header;
+	return $result;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
