@@ -142,12 +142,10 @@ function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, $header);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
 	$result = curl_exec($ch);
 	curl_close ($ch);
 
