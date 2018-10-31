@@ -106,7 +106,9 @@ $richmenu = [
     ]
 ];
 
-$createRichMenu = createRichMenu($arrayHeader,$richmenu);
+
+
+//$createRichMenu = createRichMenu($arrayHeader,$richmenu);
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
@@ -133,7 +135,7 @@ if($message == "push"){
 	ReplyMsg($arrayHeader,$arrayPostData);
 */
 
-
+/*
 function createRichMenu($arrayHeader,$arrayPostData){
 	$strUrl = "https://api.line.me/v2/bot/richmenu";
 	$ch = curl_init();
@@ -150,7 +152,8 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	//return json_decode($result,true)['richMenuId'];
 	
 }
-
+*/
+/*
 function setDefaultRichMenu($richMenuObject,$header){
 	$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
 	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/{$richMenuId}";
@@ -168,7 +171,40 @@ function setDefaultRichMenu($richMenuObject,$header){
 	return 'result :'.$result.'/r'.' Header :'.$header;
 	curl_close ($ch);
 }
+*/
 
+
+function getRichMenu($header){
+	//$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
+	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_HEADER, $header);
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	$result = curl_exec($ch);
+	
+	$richMenulist = json_decode($result,true);
+	$count = 0;
+	for($i = 0 ; $i<count($richMenulist);$i++){
+		$richMenuId = $richMenulist['richmenus'][0]['richMenuId'];
+		$strUrl = "https://api.line.me/v2/bot/richmenu/$richMenuId";
+		$ch1 = curl_init();
+		curl_setopt($ch1, CURLOPT_URL, $strUrl);
+		curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "DELETE");
+		$result = curl_exec($ch1);
+		$httpCode = curl_getinfo($ch1, CURLINFO_HTTP_CODE);
+		$count =$count+1;
+	}
+
+	return 'result :'.$count;
+	curl_close ($ch1);
+	curl_close ($ch);
+}
 
 
 function pushMsg($arrayHeader,$arrayPostData){
