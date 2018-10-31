@@ -153,14 +153,14 @@ function getRichMenu($header){
 	$richMenuList = (array) json_decode($result,true);
 	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
 	
-	return $result;
+	return $header;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
 	$strUrl = "https://api.line.me/v2/bot/richmenu";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_HEADER, $arrayHeader);
 	curl_setopt($ch, CURLOPT_POST, true);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($arrayPostData));
