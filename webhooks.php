@@ -8,6 +8,7 @@ $access_token = '0jS0Ruxi7W+hKeiP5oCADFKdmopTgkTaPHf4zZ8dai7HNISkyPk717TU9Gkvsyo
 // Get POST body content
 $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
+
 $arrayHeader = array();
 $arrayHeader[] = "Content-Type: application/json";
 $arrayHeader[] = "Authorization: Bearer {$accessToken}";
@@ -22,6 +23,13 @@ if($message == "สวัสดี"){
 	$arrayPostData['messages'][1]['type'] = "sticker";
 	$arrayPostData['messages'][1]['packageId'] = "2";
 	$arrayPostData['messages'][1]['stickerId'] = "34";
+	pushMsg($arrayHeader,$arrayPostData);
+ }
+
+ else{
+	$arrayPostData['to'] = $id;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "สวัสดีจ้าาา";
 	pushMsg($arrayHeader,$arrayPostData);
  }
 
@@ -44,5 +52,5 @@ function pushMsg($arrayHeader,$arrayPostData){
 	curl_close ($ch);
  }
  exit;
-?>
+
 echo "OK";
