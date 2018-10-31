@@ -9,7 +9,7 @@ $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
 
 $jsonHeader = "Content-Type: application/json";
-$zeroContentHeader = "Content-Length: 0 ";
+$zeroContentHeader = "Content-Length: 0";
 $accessHeader = "Authorization: Bearer {$accessToken}";
 
 $arrayHeader = array();
@@ -17,8 +17,8 @@ $arrayHeader[] = $jsonHeader;
 $arrayHeader[] = $accessHeader;
 
 $arraySetHeader = array();
-$arraySetHeader[] = $zeroContentHeader;
 $arraySetHeader[] = $accessHeader;
+$arraySetHeader[] = $zeroContentHeader;
 //รับข้อความจากผู้ใช้
 $type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
