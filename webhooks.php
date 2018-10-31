@@ -131,10 +131,10 @@ if($message == "createRichMenu"){
 
 if($message == "showRichMenu"){
 
-	$RichMenu = getRichMenu($arrayHeader,$arrayPostData);
+	$RichMenuId = getRichMenu($arrayHeader,$arrayPostData);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenu[0];
+	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenuId;
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
@@ -163,12 +163,9 @@ function getRichMenu($header){
 	curl_close ($ch);
 
 	$richMenuList = (array) json_decode($result,true);
-	$richMenus = array();
-	foreach($richMenuId as $richMenuList['richmenus']){
-		$richMenus = $richMenuId['richMenuId'];
-	}
+	$richMenu = $richMenuList['richmenus'][0]['richMunuId'];
 	
-	return $richMenus;
+	return $richMenu;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
