@@ -144,10 +144,10 @@ function getRichMenu($header){
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_NOBODY, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $Header);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$result = curl_exec($ch);
