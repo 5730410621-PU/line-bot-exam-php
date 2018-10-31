@@ -148,13 +148,14 @@ function getRichMenu($header){
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$result = curl_exec($ch);
 	curl_close ($ch);
 
 	$richMenuList = (array) json_decode($result,true);
 	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
 	
-	return "result ::".$result."  header ::".$header;
+	return "result ::".$result."  HTTPCode ::".$httpcode;
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
