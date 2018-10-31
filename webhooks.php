@@ -113,7 +113,7 @@ if($message == "reply"){
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
-	$newRichMenu = createRichMenu($arrayHeader,$richMenu);
+	$newRichMenu = json_decode(createRichMenu($arrayHeader,$richMenu),true);
 
 	if($newRichMenu != null){
 		$arrayPostData['replyToken'] = $replyToken;
