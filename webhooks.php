@@ -151,21 +151,23 @@ function createRichMenu($arrayHeader,$arrayPostData){
 }
 
 function setDefaultRichMenu($richMenuObject){
-	$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
+	
+	
+	/*$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
 	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/$richMenuId";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
 	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $accessHeaderSet);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $accessHeader);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 	$result = curl_exec($ch);
-	
-	return $result .', header :';
-	curl_close ($ch);
+	*/
+	return 'header :'.$accessHeader;
+	//curl_close ($ch);
 }
 
 
