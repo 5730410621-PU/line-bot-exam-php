@@ -29,11 +29,19 @@ if($message == "push"){
 
 if($message == "reply"){
 	$arrayPostData['replyToken'] = $replyToken;
+
+	$arrayPostData['messages'][0]['type'] = "postback";
+	$arrayPostData['messages'][0]['label'] = "Test postback";
+	$arrayPostData['messages'][0]['data'] = "action=buy&itemid=111";
+	$arrayPostData['messages'][0]['text'] = "Buy";
+	
+	/*
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "Reply Message";
 	$arrayPostData['messages'][1]['type'] = "sticker";
 	$arrayPostData['messages'][1]['packageId'] = "2";
 	$arrayPostData['messages'][1]['stickerId'] = "34";
+	*/
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
