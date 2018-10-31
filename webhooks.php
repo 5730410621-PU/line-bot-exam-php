@@ -101,13 +101,13 @@ $richmenu = [
 		  ]
     ]
 ];
-$rM = createRichMenu($arrayHeader,$richmenu);
+$rM = json_encode(createRichMenu($arrayHeader,$richmenu));
 
 
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = $rM[0];
+$arrayPostData['messages'][0]['text'] = $rM['RichMenuId'];
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
