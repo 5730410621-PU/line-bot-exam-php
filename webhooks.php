@@ -154,6 +154,7 @@ function getRichMenu($header){
 
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$result = curl_exec($ch);
+	if ($result=== false) $result = curl_error($ch);
 	curl_close ($ch);
 	
 	return "result ::".$result."Header ::".$header."HTTP Code :".$httpcode;
