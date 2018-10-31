@@ -134,7 +134,7 @@ if($message == "showRichMenu"){
 	$RichMenu = getRichMenu($arrayHeader,$arrayPostData);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = $RichMenu[0];
+	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenu[0];
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
