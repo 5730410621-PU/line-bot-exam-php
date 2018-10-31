@@ -106,9 +106,12 @@ $richmenu = [
     ]
 ];
 
+$createRichMenu = createRichMenu($arrayHeader,$richmenu);
+
+
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
+$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeaderSet);;
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
@@ -144,15 +147,12 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
 	curl_close ($ch);
-	$defRes = setDefaultRichMenu($result,$arrayHeader[1]);
-	return $defRes;
+	return $result;
 	//return json_decode($result,true)['richMenuId'];
 	
 }
 
 function setDefaultRichMenu($richMenuObject,$header){
-	
-	
 	$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
 	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/$richMenuId";
 	$ch = curl_init();
@@ -166,7 +166,7 @@ function setDefaultRichMenu($richMenuObject,$header){
 
 	$result = curl_exec($ch);
 	
-	return 'result :'.$result.'\n'.'Header :'.$header;
+	return 'result :'.$result.'/r'.'Header :'.$header;
 	curl_close ($ch);
 }
 
