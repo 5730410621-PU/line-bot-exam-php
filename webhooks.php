@@ -99,8 +99,10 @@ $richmenu = [
     ]
 ];
 
+$arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
 $arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
+ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
 	$arrayPostData['to'] = $id;
