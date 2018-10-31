@@ -1,9 +1,9 @@
-<?php // callback.php
+<?php 
 
-require "vendor/autoload.php";
-require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
-
-$accessToken = '0jS0Ruxi7W+hKeiP5oCADFKdmopTgkTaPHf4zZ8dai7HNISkyPk717TU9Gkvsyo3hxdHozxijrpT5Zx0O2jKhlIHOii1HyCwAhRR386+6c2v1soOOFPtZpQmacQMlLZR4OfUDkvLXhpLT2PjiZmvoAdB04t89/1O/w1cDnyilFU=';
+$accessToken = 'P86IeQbZCJ36VY46VIV4gMEOGfHU/vdiHi
+S3VlzQ1f/G7PpFZ1dBPyMVW4TpLX3otwiGbhQBzu6WqCO3a9z0
+4Qn297fU+1Af373yebILuF/aixVBSjt8xa4yuQa9LwBmAJEcsx
+dLYhERVurjFYWXFQdB04t89/1O/w1cDnyilFU=';
 
 $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
@@ -16,31 +16,26 @@ $arrayHeader = array();
 $arrayHeader[] = $jsonHeader;
 $arrayHeader[] = $accessHeader;
 
-$accessHeaderSet = "Authorization: Bearer <$accessToken>";
-//รับข้อความจากผู้ใช้
-$type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
-//รับ id ของผู้ใช้
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
-#ตัวอย่าง Message Type "Text + Sticker"
 
-$richmenu = [
+$richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
     "name" => "Controller",
 	"chatBarText" => "Controller",
 	"areas" => [
     	[
-          "bounds" => [
-              "x" => 551,
-              "y" => 325,
-              "width" => 321,
-              "height" => 321
+          	"bounds" => [
+				"x" => 551,
+				"y" => 325,
+				"width" => 321,
+				"height" => 321
 		  ],
-          "action" => [
-              "type" => "message",
-              "text" => "up"
+          	"action" => [
+				"type" => "message",
+				"text" => "up"
 		  ]
 		],
         [
@@ -54,7 +49,7 @@ $richmenu = [
 				"type" => "message",
 				"text" => "right"
 			]
-		  ],
+		],
 		[
 			"bounds" => [
 				"x" => 551,
@@ -107,22 +102,35 @@ $richmenu = [
 ];
 
 
-
-//$createRichMenu = createRichMenu($arrayHeader,$richmenu);
-
-$arrayPostData['replyToken'] = $replyToken;	
-$arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = getRichMenu($accessHeader);;
-ReplyMsg($arrayHeader,$arrayPostData);
-
 if($message == "push"){
 	$arrayPostData['to'] = $id;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Push Message";
-	$arrayPostData['messages'][1]['type'] = "sticker";
-	$arrayPostData['messages'][1]['packageId'] = "2";
-	$arrayPostData['messages'][1]['stickerId'] = "34";
+	$arrayPostData['messages'][0]['text'] = "Test Push Message";
 	pushMsg($arrayHeader,$arrayPostData);
+}
+
+if($message == "createRichMenu"){
+	
+	$newRichMenu = null;
+	$newRichMenu = createRichMenu($arrayHeader,$arrayPostData);
+
+	if($newRichMenu != null){
+		$arrayPostData['replyToken'] = $replyToken;
+		$arrayPostData['messages'][0]['type'] = "text";
+		$arrayPostData['messages'][0]['text'] = "Success!! RichMenuId: ".$newRichMenu['richMenuId'];
+		ReplyMsg($arrayHeader,$arrayPostData);
+	} 
+	else{
+		$arrayPostData['replyToken'] = $replyToken;
+		$arrayPostData['messages'][0]['type'] = "text";
+		$arrayPostData['messages'][0]['text'] = "Fail to create";
+		ReplyMsg($arrayHeader,$arrayPostData);
+	}
+}
+
+if($message == "showRichMenu"){
+	$newRichMenu = null;
+	$newRichMenu = createRichMenu($arrayHeader,$arrayPostData);
 }
 
 /*
@@ -135,7 +143,24 @@ if($message == "push"){
 	ReplyMsg($arrayHeader,$arrayPostData);
 */
 
-/*
+function getRichMenu($header){
+	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	$result = curl_exec($ch);
+	curl_close ($ch);
+
+	$richMenuList = (array) json_decode($result,true);
+	$richMenu = $richMenuList['richmenus'][0]['richMenuId'];
+	return $result;
+}
+
 function createRichMenu($arrayHeader,$arrayPostData){
 	$strUrl = "https://api.line.me/v2/bot/richmenu";
 	$ch = curl_init();
@@ -152,7 +177,7 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	//return json_decode($result,true)['richMenuId'];
 	
 }
-*/
+
 /*
 function setDefaultRichMenu($richMenuObject,$header){
 	$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
@@ -172,43 +197,6 @@ function setDefaultRichMenu($richMenuObject,$header){
 	curl_close ($ch);
 }
 */
-
-
-function getRichMenu($header){
-	//$richMenuId = json_decode($richMenuObject,true)['richMenuId'];
-	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, false);
-	curl_setopt($ch, CURLOPT_POST, false);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-	$result = curl_exec($ch);
-	
-	$richMenulist = json_decode($result,true);
-	$count = 0;
-	for($i = 0 ; $i<count($richMenulist['frichmenus']);$i++){
-		$richMenuId = $richMenulist['richmenus'][$i]['richMenuId'];
-		$strUrl = "https://api.line.me/v2/bot/richmenu/$richMenuId";
-		$ch1 = curl_init();
-		curl_setopt($ch1, CURLOPT_URL, $strUrl);
-		curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "DELETE");
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, null);
-		$result = curl_exec($ch1);
-		$httpCode = curl_getinfo($ch1, CURLINFO_HTTP_CODE);
-		if(httpCode == '200')
-		$count =$count+1;
-	}
-
-	return 'result :'.$count;
-	curl_close ($ch1);
-	curl_close ($ch);
-}
-
 
 function pushMsg($arrayHeader,$arrayPostData){
 	$strUrl = "https://api.line.me/v2/bot/message/push";
