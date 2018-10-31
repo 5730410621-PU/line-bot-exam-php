@@ -108,6 +108,13 @@ if($message == "push"){
 	pushMsg($arrayHeader,$arrayPostData);
 }
 
+else {
+	$arrayPostData['to'] = $id;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "Test Fail";
+	pushMsg($arrayHeader,$arrayPostData);
+}
+
 /*
 if($message == "createRichMenu"){
 	
