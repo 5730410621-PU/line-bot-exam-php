@@ -3,10 +3,7 @@
 require "vendor/autoload.php";
 require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
 
-$accessToken = 'P86IeQbZCJ36VY46VIV4gMEOGfHU/vdiHi
-S3VlzQ1f/G7PpFZ1dBPyMVW4TpLX3otwiGbhQBzu6WqCO3a9z0
-4Qn297fU+1Af373yebILuF/aixVBSjt8xa4yuQa9LwBmAJEcsx
-dLYhERVurjFYWXFQdB04t89/1O/w1cDnyilFU=';
+$accessToken = 'P86IeQbZCJ36VY46VIV4gMEOGfHU/vdiHiS3VlzQ1f/G7PpFZ1dBPyMVW4TpLX3otwiGbhQBzu6WqCO3a9z04Qn297fU+1Af373yebILuF/aixVBSjt8xa4yuQa9LwBmAJEcsxdLYhERVurjFYWXFQdB04t89/1O/w1cDnyilFU=';
 
 $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
@@ -22,6 +19,7 @@ $message = $arrayJson['events'][0]['message']['text'];
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 
+/*
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
@@ -102,7 +100,7 @@ $richMenu = [
 		  ]
     ]
 ];
-
+*/
 
 if($message == "push"){
 	$arrayPostData['replyToken'] = $replyToken;
