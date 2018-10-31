@@ -9,6 +9,7 @@ $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
 
 $jsonHeader = "Content-Type: application/json";
+$nullFieldHeader = "Content-Length: 0";
 $accessHeader = "Authorization: Bearer {$accessToken}";
 
 $arrayHeader = array();
@@ -130,8 +131,11 @@ if($message == "createRichMenu"){
 }
 
 if($message == "showRichMenu"){
-
-	$RichMenuId = getRichMenu($accessHeader);
+	$arrayHeader1 = array();
+	$arrayHeader1[] = $nullFieldHeader;
+	$arrayHeader1[] = $accessHeader;
+	
+	$RichMenuId = getRichMenu($accessHeader1);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenuId;
