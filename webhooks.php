@@ -136,7 +136,7 @@ if($message == "showRichMenu"){
 	$RichMenuId = getRichMenu($accessHeader);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Show list:".$RichMenuId;
+	$arrayPostData['messages'][0]['text'] = $RichMenuId;
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
@@ -152,7 +152,7 @@ function getRichMenu($header){
 
 	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$result = curl_exec($ch);
-	if ($result=== false) $result = curl_error($ch);
+	if ($result== null) $result = curl_error($ch);
 	curl_close ($ch);
 	
 	return "result ::".$result."Header ::".$header."HTTP Code :".$httpcode;
