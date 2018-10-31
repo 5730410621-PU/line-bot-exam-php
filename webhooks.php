@@ -7,9 +7,12 @@ $accessToken = '0jS0Ruxi7W+hKeiP5oCADFKdmopTgkTaPHf4zZ8dai7HNISkyPk717TU9Gkvsyo3
 
 $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
+
+$jsonHeader = "Content-Type: application/json";
+$accessHeader = "Authorization: Bearer {$accessToken}";
 $arrayHeader = array();
-$arrayHeader[] = "Content-Type: application/json";
-$arrayHeader[] = "Authorization: Bearer {$accessToken}";
+$arrayHeader[] = $JsonHeader;
+$arrayHeader[] = $AccessHeader;
 //รับข้อความจากผู้ใช้
 $type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
@@ -136,11 +139,25 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
-	return $result;
+	$defRes = setDefaultRichMenu($result);
+
+	return $defRes;
 	curl_close ($ch);
 }
 
-
+function setDefaultRichMenu($richMenuId){
+	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/$richMenuId";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $accessHeader);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	$result = curl_exec($ch);
+	return $result;
+	curl_close ($ch);
+}
 
 
 
