@@ -11,11 +11,13 @@ $arrayHeader = array();
 $arrayHeader[] = "Content-Type: application/json";
 $arrayHeader[] = "Authorization: Bearer {$accessToken}";
 //รับข้อความจากผู้ใช้
+$type = $arrayJson['events'][0]['type'];
 $message = $arrayJson['events'][0]['message']['text'];
 //รับ id ของผู้ใช้
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 #ตัวอย่าง Message Type "Text + Sticker"
+
 
 if($message == "push"){
 	$arrayPostData['to'] = $id;
@@ -27,27 +29,16 @@ if($message == "push"){
 	pushMsg($arrayHeader,$arrayPostData);
 }
 
-if($message == "reply"){
-	$arrayPostData['replyToken'] = $replyToken;
-	
-	/*
-	$arrayPostData['messages'][0]['type'] = "postback";
-	$arrayPostData['messages'][0]['label'] = "Buy";
-	$arrayPostData['messages'][0]['data'] = "action=buy&itemid=111";
-	$arrayPostData['messages'][0]['text'] = "Buy";
-	$arrayPostData['messages'][1]['type'] = "sticker";
-	$arrayPostData['messages'][1]['packageId'] = "2";
-	$arrayPostData['messages'][1]['stickerId'] = "34";
-	*/
-	
+
+	$arrayPostData['replyToken'] = $replyToken;	
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Reply Message";
+	$arrayPostData['messages'][0]['text'] = $type .' with :'.$message;
 	$arrayPostData['messages'][1]['type'] = "sticker";
 	$arrayPostData['messages'][1]['packageId'] = "2";
-	$arrayPostData['messages'][1]['stickerId'] = "34";
-	
+	$arrayPostData['messages'][1]['stickerId'] = "34";	
 	ReplyMsg($arrayHeader,$arrayPostData);
-}
+
+
 
 
 
