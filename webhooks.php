@@ -112,7 +112,7 @@ $richmenu = [
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = setDefaultRichMenu($createRichMenu,$accessHeader);;
+$arrayPostData['messages'][0]['text'] = getRichMenu($accessHeader);;
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
@@ -179,7 +179,7 @@ function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_HEADER, $header);
+	curl_setopt($ch, CURLOPT_HEADER, false);
 	curl_setopt($ch, CURLOPT_POST, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, null);
@@ -196,6 +196,8 @@ function getRichMenu($header){
 		$ch1 = curl_init();
 		curl_setopt($ch1, CURLOPT_URL, $strUrl);
 		curl_setopt($ch1, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, null);
 		$result = curl_exec($ch1);
 		$httpCode = curl_getinfo($ch1, CURLINFO_HTTP_CODE);
 		$count =$count+1;
