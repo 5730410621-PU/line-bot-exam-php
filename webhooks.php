@@ -140,14 +140,14 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
 	
-	//$defRes = setDefaultRichMenu($result);
-	//return $result;
-	return json_decode($result,true)['richMenuId'];
+	$defRes = setDefaultRichMenu($result);
+	return $defRes;
+	//return json_decode($result,true)['richMenuId'];
 	curl_close ($ch);
 }
 
 function setDefaultRichMenu($richMenuObject){
-	$richMenuId = $richMenuObject['richMenuId'];
+	$richMenuId = json_decode($result,true)['richMenuId'];
 	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/$richMenuId";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$strUrl);
