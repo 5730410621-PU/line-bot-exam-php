@@ -101,13 +101,10 @@ $richmenu = [
 		  ]
     ]
 ];
-$rM = json_decode(createRichMenu($arrayHeader,$richmenu),true);
-
-
 
 $arrayPostData['replyToken'] = $replyToken;	
 $arrayPostData['messages'][0]['type'] = "text";
-$arrayPostData['messages'][0]['text'] = $rM['RichMenuId'];
+$arrayPostData['messages'][0]['text'] = createRichMenu($arrayHeader,$richmenu);
 ReplyMsg($arrayHeader,$arrayPostData);
 
 if($message == "push"){
@@ -142,10 +139,10 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($ch);
-
+	
 	//$defRes = setDefaultRichMenu($result);
 
-	return $result;
+	return json_decode($result,true);;
 	curl_close ($ch);
 }
 
