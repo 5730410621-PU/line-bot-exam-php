@@ -9,7 +9,6 @@ $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
 
 $jsonHeader = "Content-Type: application/json";
-$imageHeader = "Content-Type: application/json";
 $accessHeader = "Authorization: Bearer {$accessToken}";
 
 $arrayHeader = array();
@@ -27,8 +26,8 @@ $imageArrayHeader[] = "Content-Type: image/jpeg";
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
-    "name" => "RichMenus",
-	"chatBarText" => "Tap to open",
+    "name" => "เมนู",
+	"chatBarText" => "เมนู",
 	"areas" => [
     	[
           	"bounds" => [
