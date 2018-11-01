@@ -16,6 +16,7 @@ $arrayHeader[] = $jsonHeader;
 $arrayHeader[] = $accessHeader;
 
 $message = $arrayJson['events'][0]['message']['text'];
+$type = $arrayJson['events'][0]['type'];
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 
@@ -26,7 +27,7 @@ $imageArrayHeader[] = "Content-Type: image/jpeg";
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
-    "name" => "เมนู",
+    "name" => "RichMenus",
 	"chatBarText" => "เมนู",
 	"areas" => [
     	[
@@ -114,7 +115,7 @@ if($message == "reply"){
 
 ////////////////// Get Rich Menu ////////////////////////
 
-if($message == "showRichMenu"){
+else if($message == "showRichMenu"){
 
 	$RichMenuId = getRichMenu($arrayHeader);
 	$arrayPostData['replyToken'] = $replyToken;
@@ -288,3 +289,14 @@ function replyMsg($arrayHeader,$arrayPostData){
 	curl_close ($ch);
 }
 echo "OK";
+
+
+
+/////////////////// Rich Reply Menu ///////////////////////
+
+if($type == "message"){
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "Hello User via ".$message;
+	replyMsg($arrayHeader,$arrayPostData);
+}
