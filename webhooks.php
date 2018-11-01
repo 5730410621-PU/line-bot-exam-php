@@ -294,7 +294,15 @@ echo "OK";
 
 /////////////////// Rich Reply Menu ///////////////////////
 
-if($type == "message"){
+if($message == "News"){
+	$image_url = "https://i.pinimg.com/originals/cc/22/d1/cc22d10d9096e70fe3dbe3be2630182b.jpg";
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "image";
+	$arrayPostData['messages'][0]['originalContentUrl'] = $image_url;
+	$arrayPostData['messages'][0]['originalContentUrl'] = $image_url;
+	replyMsg($arrayHeader,$arrayPostData);
+}
+else{
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = "Hello User via ".$message;
