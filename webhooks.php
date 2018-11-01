@@ -143,6 +143,36 @@ function getRichMenu($header){
 	curl_close ($ch);
 	
 }
+////////////// Get Rich Menu by Id /////////////////////
+
+if($message == "userRichMenu"){
+
+	$RichMenuId = getRichMenuByUser($arrayHeader,$id);
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = "RichId :".$RichMenuId;
+	ReplyMsg($arrayHeader,$arrayPostData);
+}
+
+
+function getRichMenuByUser($header,$id){
+	$strUrl = "https://api.line.me/v2/bot/user/$id/richmenu";
+	$ch = curl_init($strUrl);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_VERBOSE, 1);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	$result = curl_exec($ch);
+	
+	return "Result : ".$result."\nHTTPCode : ".$httpcode;
+	curl_close ($ch);
+	
+}
+
 
 ///////////// Create Rich Menu ////////////////////////
 
