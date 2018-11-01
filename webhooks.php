@@ -111,6 +111,37 @@ if($message == "reply"){
 }
 
 
+if($message == "showRichMenu"){
+
+	
+	$RichMenuId = getRichMenu($accessHeader);
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = $RichMenuId;
+	ReplyMsg($arrayHeader,$arrayPostData);
+}
+
+function getRichMenu($header){
+	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_HTTPGET, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	$result = curl_exec($ch);
+	if ($result== null) $result = "Hello";
+	
+
+	return "result ::".$result."\nHeader ::".$header."\nHTTP Code :".curl_error($ch);
+	curl_close ($ch);
+	
+}
+
+
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
@@ -128,35 +159,6 @@ if($message == "createRichMenu"){
 		$arrayPostData['messages'][0]['text'] = "Fail to create";
 		ReplyMsg($arrayHeader,$arrayPostData);
 	}
-}
-
-if($message == "showRichMenu"){
-
-	
-	$RichMenuId = getRichMenu($accessHeader);
-	$arrayPostData['replyToken'] = $replyToken;
-	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = $RichMenuId;
-	ReplyMsg($arrayHeader,$arrayPostData);
-}
-
-function getRichMenu($header){
-	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_POST, false);
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-	$result = curl_exec($ch);
-	if ($result== null) $result = "Hello";
-	
-
-	return "result ::".$result."\nHeader ::".$header."\nHTTP Code :".curl_error($ch);
-	curl_close ($ch);
-	
 }
 
 function createRichMenu($arrayHeader,$arrayPostData){
