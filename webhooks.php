@@ -27,8 +27,8 @@ $imageArrayHeader[] = "Content-Type: image/jpeg";
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
-    "name" => "New Test Menud",
-	"chatBarText" => "Controller",
+    "name" => "New Test Menus",
+	"chatBarText" => "Tap to open",
 	"areas" => [
     	[
           	"bounds" => [
@@ -116,8 +116,6 @@ if($message == "reply"){
 ////////////////// Get Rich Menu ////////////////////////
 
 if($message == "showRichMenu"){
-
-	
 	$RichMenuId = getRichMenu($arrayHeader);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
@@ -149,12 +147,12 @@ function getRichMenu($header){
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
-	$newRichMenu = json_decode(createRichMenu($arrayHeader,$richMenu),true);
+	$newRichMenu = createRichMenu($arrayHeader,$richMenu);
 
 	if($newRichMenu != null){
 		$arrayPostData['replyToken'] = $replyToken;
 		$arrayPostData['messages'][0]['type'] = "text";
-		$arrayPostData['messages'][0]['text'] = "Success!! RichMenuId: ".$newRichMenu['richMenuId'];
+		$arrayPostData['messages'][0]['text'] = "Success!! RichMenuId: ".$newRichMenu;
 		ReplyMsg($arrayHeader,$arrayPostData);
 	} 
 	else{
