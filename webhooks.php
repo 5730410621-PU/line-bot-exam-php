@@ -27,7 +27,7 @@ $imageArrayHeader[] = "Content-Type: image/jpeg";
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
-    "name" => "New Test Menus",
+    "name" => "RichMenus",
 	"chatBarText" => "Tap to open",
 	"areas" => [
     	[
@@ -109,7 +109,7 @@ $richMenu = [
 if($message == "reply"){
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = "Test Reply Message";
+	$arrayPostData['messages'][0]['text'] = "User Id:".$id;
 	replyMsg($arrayHeader,$arrayPostData);
 }
 
@@ -207,7 +207,6 @@ function setRichMenu($arrayHeader,$richMenuId){
 	$result = curl_exec($ch);
 	curl_close ($ch);
 	return $result;
-
 }
 
 
