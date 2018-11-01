@@ -116,10 +116,11 @@ if($message == "reply"){
 ////////////////// Get Rich Menu ////////////////////////
 
 if($message == "showRichMenu"){
+
 	$RichMenuId = getRichMenu($arrayHeader);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = $RichMenuId;
+	$arrayPostData['messages'][0]['text'] = "RichId :".$RichMenuId;
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
@@ -135,9 +136,10 @@ function getRichMenu($header){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 
-	$result = curl_exec($ch);
+	$result = json_decode(curl_exec($ch),true);
+	$richId = $result['richmenus'][0]['richMenuId'];
 	if ($result== null) $result = "Hello";
-	return "result ::".$result."\nHeader ::".$header."\n";
+	return $richId;
 	curl_close ($ch);
 	
 }
@@ -147,12 +149,12 @@ function getRichMenu($header){
 if($message == "createRichMenu"){
 	
 	$newRichMenu = null;
-	$newRichMenu = createRichMenu($arrayHeader,$richMenu);
+	$newRichMenu = json_decode(createRichMenu($arrayHeader,$richMenu),true);
 
 	if($newRichMenu != null){
 		$arrayPostData['replyToken'] = $replyToken;
 		$arrayPostData['messages'][0]['type'] = "text";
-		$arrayPostData['messages'][0]['text'] = "Success!! RichMenuId: ".$newRichMenu;
+		$arrayPostData['messages'][0]['text'] = "Success!! RichMenuId: ".$newRichMenu['richMenuId'];
 		ReplyMsg($arrayHeader,$arrayPostData);
 	} 
 	else{
@@ -180,18 +182,31 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	
 }
 
-/////////////////////Set Rich Menu Image /////////////////////////////
+/////////////////////Set Rich Menu /////////////////////////////
 
-if($message == "setMenuImage"){
-	$RichMenuId = setRichMenuImage($imageHeader);
+if($message == "setMenu"){
+
+	$richMenuId = getRichMenu($arrayHeader);
+	$setRichMenu = setRichMenu($arrayHeader,$richMenuId);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
-	$arrayPostData['messages'][0]['text'] = $RichMenuId;
+	$arrayPostData['messages'][0]['text'] = "Set Complete ::".$setRichMenu;
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
 
-function setRichMenuImage($imageHeader){
-
+function setRichMenu($arrayHeader,$richMenuId){
+	$strUrl = "https://api.line.me/v2/bot/user/all/richmenu/".$richMenuId;
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL,$strUrl);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $arrayHeader);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, " ");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	$result = curl_exec($ch);
+	curl_close ($ch);
+	return $result;
 
 }
 
