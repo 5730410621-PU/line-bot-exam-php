@@ -9,7 +9,7 @@ $content = file_get_contents('php://input');
 $arrayJson = json_decode($content, true);
 
 $jsonHeader = "Content-Type: application/json";
-$nullFieldHeader = "Content-Length: 0";
+$imageHeader = "Content-Type: application/json";
 $accessHeader = "Authorization: Bearer {$accessToken}";
 
 $arrayHeader = array();
@@ -20,83 +20,86 @@ $message = $arrayJson['events'][0]['message']['text'];
 $id = $arrayJson['events'][0]['source']['userId'];
 $replyToken = $arrayJson['events'][0]['replyToken'];
 
+$imageArrayHeader = array();
+$imageArrayHeader[] = "Content-Type: image/jpeg";
+
 
 $richMenu = [
 	'size' => [ 'width' => 2500,'height' => 1686 ],
 	"selected" => false,
-    "name" => "Controller",
+    "name" => "New Test Menud",
 	"chatBarText" => "Controller",
 	"areas" => [
     	[
           	"bounds" => [
-				"x" => 551,
-				"y" => 325,
-				"width" => 321,
-				"height" => 321
+				"x" => 0,
+				"y" => 0,
+				"width" => 833,
+				"height" => 843
 		  ],
           	"action" => [
 				"type" => "message",
-				"text" => "up"
+				"text" => "Horo"
 		  ]
 		],
         [
 			"bounds" => [
-				"x" => 876,
-				"y" => 651,
-				"width" => 321,
-				"height" => 321
+				"x" => 833,
+				"y" => 0,
+				"width" => 833,
+				"height" => 843
 			],
 			"action" => [
 				"type" => "message",
-				"text" => "right"
+				"text" => "Poll"
 			]
 		],
 		[
 			"bounds" => [
-				"x" => 551,
-				"y" => 972,
-				"width" => 321,
-				"height" => 321
+				"x" => 1666,
+				"y" => 0,
+				"width" => 833,
+				"height" => 843
 			],
 			"action" => [
 				"type" => "message",
-				"text" => "down"
+				"text" => "Quiz"
 			]
 		  ],
 		[
 			"bounds" => [
-				"x" => 225,
-				"y" => 651,
-				"width" => 321,
-				"height" => 321
+				"x" => 0,
+				"y" => 843,
+				"width" => 833,
+				"height" => 843
 			],
 			"action" => [
 				"type" => "message",
-				"text" => "left"
+				"text" => "News"
 			]
 		  ],
 		[
 			"bounds" => [
-				"x" => 1433,
-				"y" => 657,
-				"width" => 321,
-				"height" => 321
+				"x" => 833,
+				"y" => 843,
+				"width" => 833,
+				"height" => 843
 			],
 			"action" => [
 				"type" => "message",
-				"text" => "btn b"
+				"text" => "Vr/Ar"
 			]
 		  ],
 		[
 			"bounds" => [
-				"x" => 1907,
-				"y" => 657,
-				"width" => 321,
-				"height" => 321
+				"x" => 1666,
+				"y" => 843,
+				"width" => 833,
+				"height" => 843
 			],
 			"action" => [
 				"type" => "message",
-				"text" => "btn a"
+				"text" => "Report"
 			]
 		  ]
     ]
@@ -110,6 +113,7 @@ if($message == "reply"){
 	replyMsg($arrayHeader,$arrayPostData);
 }
 
+////////////////// Get Rich Menu ////////////////////////
 
 if($message == "showRichMenu"){
 
@@ -120,6 +124,7 @@ if($message == "showRichMenu"){
 	$arrayPostData['messages'][0]['text'] = $RichMenuId;
 	ReplyMsg($arrayHeader,$arrayPostData);
 }
+
 
 function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
@@ -134,13 +139,12 @@ function getRichMenu($header){
 
 	$result = curl_exec($ch);
 	if ($result== null) $result = "Hello";
-	
-
-	return "result ::".$result."\nHeader ::".$header."\nHTTP Code :".curl_error($ch);
+	return "result ::".$result."\nHeader ::".$header."\n";
 	curl_close ($ch);
 	
 }
 
+///////////// Create Rich Menu ////////////////////////
 
 if($message == "createRichMenu"){
 	
@@ -177,6 +181,22 @@ function createRichMenu($arrayHeader,$arrayPostData){
 	//return json_decode($result,true)['richMenuId'];
 	
 }
+
+/////////////////////Set Rich Menu Image /////////////////////////////
+
+if($message == "setMenuImage"){
+	$RichMenuId = setRichMenuImage($imageHeader);
+	$arrayPostData['replyToken'] = $replyToken;
+	$arrayPostData['messages'][0]['type'] = "text";
+	$arrayPostData['messages'][0]['text'] = $RichMenuId;
+	ReplyMsg($arrayHeader,$arrayPostData);
+}
+
+function setRichMenuImage($imageHeader){
+
+
+}
+
 
 /*
 function setDefaultRichMenu($richMenuObject,$header){
