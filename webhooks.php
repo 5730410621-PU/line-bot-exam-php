@@ -165,8 +165,9 @@ function getRichMenuByUser($header,$id){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 	curl_setopt($ch, CURLOPT_HEADER, 0);
-	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	
 	$result = curl_exec($ch);
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	
 	return "Result : ".$result."\nHTTPCode : ".$httpcode;
 	curl_close ($ch);
