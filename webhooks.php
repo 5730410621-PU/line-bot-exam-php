@@ -114,7 +114,7 @@ if($message == "reply"){
 if($message == "showRichMenu"){
 
 	
-	$RichMenuId = getRichMenu($accessHeader);
+	$RichMenuId = getRichMenu($arrayHeader);
 	$arrayPostData['replyToken'] = $replyToken;
 	$arrayPostData['messages'][0]['type'] = "text";
 	$arrayPostData['messages'][0]['text'] = $RichMenuId;
@@ -123,15 +123,14 @@ if($message == "showRichMenu"){
 
 function getRichMenu($header){
 	$strUrl = "https://api.line.me/v2/bot/richmenu/list";
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL,$strUrl);
-	curl_setopt($ch, CURLOPT_POST, false);
-	curl_setopt($ch, CURLOPT_HTTPGET, true);
+	$ch = curl_init($strUrl);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, "");
+	curl_setopt($ch, CURLOPT_POST, false);
+	curl_setopt($ch, CURLOPT_VERBOSE, 1);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
 
 	$result = curl_exec($ch);
 	if ($result== null) $result = "Hello";
